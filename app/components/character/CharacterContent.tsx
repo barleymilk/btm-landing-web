@@ -32,7 +32,7 @@ function CharacterContent() {
         {CHARACTERS.map((character) => (
           <article
             key={character.name}
-            className="rounded-[32px] bg-white p-8 shadow-lg"
+            className="rounded-[24px] bg-white p-6 shadow-lg sm:rounded-[32px] sm:p-8"
           >
             <div className="mb-6 flex justify-center rounded-2xl bg-brand-light/30 py-8">
               {"src" in character ? (
@@ -52,7 +52,7 @@ function CharacterContent() {
             <span className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-500">
               {character.role}
             </span>
-            <h2 className="mt-3 text-2xl font-bold text-zinc-900">
+            <h2 className="mt-3 text-xl font-bold text-zinc-900 sm:text-2xl">
               {character.name}
             </h2>
             <p className="mt-2 text-zinc-600">{character.description}</p>

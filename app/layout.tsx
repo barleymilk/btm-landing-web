@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         <ScrollToTop />
-        <div className="flex min-h-full flex-1 flex-col px-36 pt-0 font-sans bg-zinc-50 dark:bg-black">
+        <div className="flex min-h-full flex-1 flex-col px-4 pt-0 font-sans bg-zinc-50 sm:px-6 md:px-12 lg:px-24 xl:px-36 dark:bg-black">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

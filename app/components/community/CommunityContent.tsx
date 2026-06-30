@@ -41,7 +41,7 @@ function CommunityContent() {
           <a
             key={name}
             href={href}
-            className="group rounded-[32px] bg-white p-8 shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+            className="group rounded-[24px] bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl sm:rounded-[32px] sm:p-8"
           >
             <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-brand-light text-brand transition group-hover:bg-brand group-hover:text-white">
               <Icon className="size-5" />
@@ -54,8 +54,8 @@ function CommunityContent() {
         ))}
       </section>
 
-      <section className="mt-8 rounded-[32px] bg-white p-8 text-center shadow-lg md:p-12">
-        <h2 className="text-2xl font-bold text-zinc-900">
+      <section className="mt-8 rounded-[24px] bg-white p-6 text-center shadow-lg sm:rounded-[32px] sm:p-8 md:p-12">
+        <h2 className="text-xl font-bold text-zinc-900 sm:text-2xl">
           아직 망설여지나요?
         </h2>
         <p className="mt-3 text-zinc-600">

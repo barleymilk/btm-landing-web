@@ -30,9 +30,9 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-16 mb-8">
-      <div className="rounded-[40px] bg-white p-8 shadow-lg md:p-10">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-10 mb-6 sm:mt-16 sm:mb-8">
+      <div className="rounded-[24px] bg-white p-6 shadow-lg sm:rounded-[32px] sm:p-8 md:rounded-[40px] md:p-10">
+        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <ScrollLink href="/" className="inline-block">
               <Image
@@ -103,7 +103,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-zinc-100 pt-6 text-sm text-zinc-500 md:flex-row md:items-center md:justify-between">
+        <div className="mt-8 flex flex-col gap-4 border-t border-zinc-100 pt-6 text-sm text-zinc-500 sm:mt-10 md:flex-row md:items-center md:justify-between">
           <p>© {year} Buttumak Games. All rights reserved.</p>
           <div className="flex gap-4">
             {LEGAL_LINKS.map(({ href, label }) => (

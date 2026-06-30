@@ -30,7 +30,7 @@ function GameContent() {
         {GAMES.map((game) => (
           <article
             key={game.title}
-            className="rounded-[32px] bg-white p-8 shadow-lg"
+            className="rounded-[24px] bg-white p-6 shadow-lg sm:rounded-[32px] sm:p-8"
           >
             <div className="mb-4 flex aspect-video items-center justify-center rounded-2xl bg-brand-light/50">
               <span className="text-sm font-bold text-brand">Coming Soon</span>
@@ -38,7 +38,7 @@ function GameContent() {
             <span className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-500">
               {game.status}
             </span>
-            <h2 className="mt-3 text-2xl font-bold text-zinc-900">
+            <h2 className="mt-3 text-xl font-bold text-zinc-900 sm:text-2xl">
               {game.title}
             </h2>
             <p className="mt-2 text-zinc-600">{game.description}</p>
