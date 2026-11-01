@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
 
 function isSameRoute(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  return pathname === href;
 }
 
 type ScrollLinkProps = ComponentProps<typeof Link>;

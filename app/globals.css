@@ -16,13 +16,6 @@
   --font-mono: ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 @font-face {
   font-family: "NexonMaplestory";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff")
@@ -43,4 +36,57 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "NexonMaplestory", sans-serif;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-[24px] bg-white p-6 shadow-sm sm:rounded-[32px] sm:p-8 md:p-10;
+  }
+  .eyebrow {
+    @apply text-xs font-bold tracking-widest text-brand uppercase;
+  }
+  .section-title {
+    @apply text-2xl font-bold leading-snug text-zinc-900 sm:text-3xl;
+  }
+  .text-link {
+    @apply inline-flex items-center gap-2 font-bold text-brand underline-offset-4 hover:underline;
+  }
+  .button-primary {
+    @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-brand px-6 py-3 text-center font-bold text-white transition hover:bg-brand-dark;
+  }
+  .button-secondary {
+    @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-zinc-200 bg-white px-6 py-3 text-center font-bold text-zinc-800 transition hover:border-zinc-400;
+  }
+  .field {
+    @apply w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400;
+  }
+  .field-label {
+    @apply mb-2 block text-sm font-bold text-zinc-800;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 4px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline-offset: 1px;
+}
+::selection {
+  background: #fce2e3;
+  color: #171717;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

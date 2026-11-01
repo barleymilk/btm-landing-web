@@ -1,52 +1,45 @@
+import Link from "next/link";
 import PageHero from "../PageHero";
 
-const GAMES = [
-  {
-    title: "첫 번째 프로젝트",
-    description: "Buttumak Games의 debut title. 곧 공개됩니다.",
-    status: "Coming Soon",
-  },
-  {
-    title: "새로운 모험",
-    description: "귀여운 캐릭터와 함께 떠나는 새로운 여정을 준비 중입니다.",
-    status: "In Development",
-  },
-] as const;
-
-function GameContent() {
+export default function GameContent() {
   return (
-    <div className="pb-8">
+    <>
       <PageHero
-        badge="Games"
+        badge="Our games"
         title={
           <>
-            Buttumak의 <span className="text-brand">게임</span>
+            다음 이야기를
+            <br />
+            <span className="text-brand">만들고 있어요</span>
           </>
         }
-        description="Buttumak Games가 만들어가는 인디 게임 프로젝트를 만나보세요."
+        description="귀여운 캐릭터와 함께할 부뚜막게임즈의 인디 게임을 준비하고 있습니다."
       />
-
-      <section className="mt-8 grid gap-6 md:grid-cols-2">
-        {GAMES.map((game) => (
-          <article
-            key={game.title}
-            className="rounded-[24px] bg-white p-6 shadow-lg sm:rounded-[32px] sm:p-8"
-          >
-            <div className="mb-4 flex aspect-video items-center justify-center rounded-2xl bg-brand-light/50">
-              <span className="text-sm font-bold text-brand">Coming Soon</span>
-            </div>
-            <span className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-500">
-              {game.status}
-            </span>
-            <h2 className="mt-3 text-xl font-bold text-zinc-900 sm:text-2xl">
-              {game.title}
-            </h2>
-            <p className="mt-2 text-zinc-600">{game.description}</p>
-          </article>
-        ))}
+      <section className="panel mt-8 grid items-center gap-8 md:grid-cols-2">
+        <div
+          aria-hidden="true"
+          className="flex min-h-60 items-center justify-center rounded-3xl bg-brand-light/60"
+        >
+          <div className="text-center">
+            <span className="text-6xl text-brand">✦</span>
+            <p className="mt-5 text-sm font-bold tracking-widest text-brand">
+              A NEW STORY IS COOKING
+            </p>
+          </div>
+        </div>
+        <div>
+          <p className="eyebrow">In development</p>
+          <h2 className="section-title mt-4">아직은, 만드는 중</h2>
+          <p className="mt-5 leading-8 text-zinc-600">
+            게임의 이름과 플레이 화면, 출시 일정은 공개할 준비가 되면
+            알려드리겠습니다. 그때까지 개발 소식에서 스튜디오의 이야기를
+            만나보세요.
+          </p>
+          <Link href="/news" className="button-primary mt-6">
+            개발 소식 확인하기 ↗
+          </Link>
+        </div>
       </section>
-    </div>
+    </>
   );
 }
-
-export default GameContent;
