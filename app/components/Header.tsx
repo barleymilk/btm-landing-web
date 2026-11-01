@@ -52,11 +52,12 @@ function NavLink({
 
 function Header() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
+  return <HeaderNavigation key={pathname} pathname={pathname} />;
+}
+
+function HeaderNavigation({ pathname }: { pathname: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";

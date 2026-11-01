@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Development Workflow
+
+작업을 시작하기 전에 [개발 및 브랜치 전략](CONTRIBUTING.md)을 확인하세요. 최신 `main`에서 `feature/*`, `fix/*`, `chore/*` 등 목적에 맞는 브랜치를 만들고 PR로 병합합니다.
+
 ## Getting Started
 
 First, run the development server:
