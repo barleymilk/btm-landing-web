@@ -6,17 +6,11 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import ScrollLink from "./ScrollLink";
-
-const NAV_LINKS = [
-  { href: "/", label: "메인" },
-  { href: "/game", label: "게임" },
-  { href: "/character", label: "캐릭터" },
-  { href: "/community", label: "커뮤니티" },
-] as const;
+import { navigation as NAV_LINKS } from "@/lib/navigation";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function NavLink({
@@ -34,6 +28,7 @@ function NavLink({
     <li>
       <ScrollLink
         href={href}
+        aria-current={isActive ? "page" : undefined}
         onClick={onClick}
         className={`group relative inline-block px-1 py-2 transition duration-200 hover:-translate-y-0.5 ${
           isActive ? "text-brand" : "text-zinc-800 hover:text-brand"
@@ -52,11 +47,12 @@ function NavLink({
 
 function Header() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
+  return <HeaderNavigation key={pathname} pathname={pathname} />;
+}
+
+function HeaderNavigation({ pathname }: { pathname: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -67,7 +63,10 @@ function Header() {
 
   return (
     <header>
-      <nav className="relative mt-4 rounded-[32px] bg-white p-3 shadow-lg transition-shadow duration-300 hover:shadow-xl sm:mt-6 sm:rounded-[40px] sm:p-4 md:mt-8 md:rounded-[60px]">
+      <nav
+        aria-label="주 메뉴"
+        className="relative mt-4 rounded-[32px] bg-white p-3 shadow-lg transition-shadow duration-300 hover:shadow-xl sm:mt-6 sm:rounded-[40px] sm:p-4 md:mt-8 md:rounded-[60px]"
+      >
         <div className="grid grid-cols-[auto_1fr_auto] items-center">
           <ScrollLink
             href="/"
@@ -78,6 +77,7 @@ function Header() {
               width={524}
               height={631}
               alt="buttumak games logo"
+              loading="eager"
               className="h-10 w-auto object-contain drop-shadow-sm sm:h-12 md:h-[60px]"
             />
           </ScrollLink>
@@ -89,7 +89,7 @@ function Header() {
             부뚜막게임즈
           </ScrollLink>
 
-          <ul className="hidden justify-center gap-8 text-xl font-bold md:col-start-2 md:flex md:gap-16 md:text-2xl lg:gap-24">
+          <ul className="hidden justify-center gap-5 text-lg font-bold md:col-start-2 md:flex lg:gap-9 lg:text-xl xl:gap-12">
             {NAV_LINKS.map(({ href, label }) => (
               <NavLink
                 key={href}
@@ -136,6 +136,9 @@ function Header() {
                   <li key={href}>
                     <ScrollLink
                       href={href}
+                      aria-current={
+                        isActivePath(pathname, href) ? "page" : undefined
+                      }
                       onClick={() => setMenuOpen(false)}
                       className={`block rounded-xl px-3 py-3 text-lg font-bold transition ${
                         isActivePath(pathname, href)

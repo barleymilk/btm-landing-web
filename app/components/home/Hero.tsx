@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 function Hero() {
+  const reduceMotion = useReducedMotion();
   return (
     <section className="mt-4 sm:mt-6 md:mt-8">
       <div className="relative overflow-hidden rounded-[24px] bg-white px-5 py-8 shadow-lg sm:rounded-[32px] sm:px-8 sm:py-10 md:rounded-[40px] md:px-14 md:py-16">
@@ -19,7 +20,7 @@ function Hero() {
 
         <div className="relative grid items-center gap-8 sm:gap-10 md:grid-cols-2 md:gap-12">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="space-y-6"
@@ -38,28 +39,28 @@ function Hero() {
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <Link
-                href="/game"
+                href="/about"
                 className="rounded-full bg-brand px-6 py-3 text-center text-base font-bold text-white transition hover:bg-brand-dark"
               >
-                게임 둘러보기
+                스튜디오 만나보기
               </Link>
               <Link
-                href="/community"
+                href="/news"
                 className="rounded-full border border-zinc-200 bg-white px-6 py-3 text-center text-base font-bold text-zinc-800 transition hover:border-zinc-400 hover:bg-zinc-50"
               >
-                커뮤니티 참여
+                개발 소식 읽기
               </Link>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="flex justify-center"
           >
             <motion.div
-              animate={{ y: [0, -12, 0] }}
+              animate={reduceMotion ? undefined : { y: [0, -12, 0] }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
@@ -73,7 +74,7 @@ function Hero() {
                 width={320}
                 height={320}
                 alt="Buttumak Games 캐릭터"
-                priority
+                loading="eager"
                 className="relative size-44 object-contain sm:size-56 md:size-72"
               />
             </motion.div>

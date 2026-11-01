@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 부뚜막게임즈 공식 홈페이지
 
-## Getting Started
+스튜디오 소개, 게임·캐릭터 소개, 개발 소식, 문의 접수를 제공하는 Next.js 16 / React 19 프런트입니다. 문의는 별도 Node.js 백엔드를 통해 SQLite에 저장합니다.
 
-First, run the development server:
+## 저장소와 브랜치
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+작업 전 [개발 및 브랜치 전략](CONTRIBUTING.md)을 확인합니다. 최신 `main`에서 `feature/*`, `fix/*`, `chore/*` 등 목적에 맞는 브랜치를 만들고 PR로 병합합니다.
+
+로컬 폴더 구조는 다음과 같습니다. 각 `dev`는 브랜치가 아닌 작업 폴더입니다.
+
+```text
+buttumak_webpage/
+├── front/dev/    # 이 저장소
+└── back/dev/     # 문의 API, 별도 로컬 Git 저장소
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 개발 환경
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Node.js 24.14 이상인 24 버전을 사용합니다. 두 작업 폴더가 준비된 상태에서 이 저장소에서 실행합니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm ci
+node scripts/setup-local.mjs
+```
 
-## Learn More
+설정 스크립트는 기존 환경값을 보존하면서 `.env.local`과 백엔드 `.env`에 일치하는 서버 인증키를 설정합니다. 키와 문의 데이터는 커밋하지 않습니다. 설정 항목은 [.env.example](.env.example)을 확인하세요.
 
-To learn more about Next.js, take a look at the following resources:
+터미널 두 개에서 각각 실행합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# front/dev
+npm run dev -- --hostname 127.0.0.1 --port 3001
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# back/dev
+npm run dev
+```
 
-## Deploy on Vercel
+홈페이지: http://127.0.0.1:3001 · API 상태: http://127.0.0.1:4001/health
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 구현한 화면과 흐름
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 경로 | 기능 |
+| --- | --- |
+| `/` | 스튜디오 안내, 최신 개발 소식, 문의 진입 |
+| `/about` | 회사 소개와 개발 방향 |
+| `/game`, `/character` | 공개 가능한 개발 현황과 마스코트 소개 |
+| `/news` | 소식 검색, 공지·개발 일지 필터, 빈 결과 안내 |
+| `/news/[slug]` | 글 상세, 메타데이터, 없는 글 404 |
+| `/contact` | 유형 선택, 입력 검증, 동의, 문의 접수와 접수번호 |
+| `/privacy` | 문의 정보의 수집 목적과 보관 기준 |
+| `/community` | 기존 주소에서 개발 소식으로 이동 |
+| `/api/inquiries` | 같은 출처의 문의를 백엔드로 전달하는 서버 전용 프록시 |
+
+문의 폼 → 프런트 API → 백엔드 검증 → SQLite 저장 → 접수번호 표시 순서로 동작합니다. 실패 시 입력은 유지하며 같은 내용 재시도는 같은 식별키를 사용해 중복 저장을 방지합니다. 백엔드가 응답하지 않으면 성공 메시지 대신 오류를 표시합니다.
+
+## 개발 소식 작성
+
+[content/news.ts](content/news.ts)에 글을 추가합니다. `slug`는 중복되지 않는 영문 주소, `date`는 `YYYY-MM-DD`, `category`는 `notice` 또는 `devlog`입니다. `sections`에 제목과 문단을 작성하고 `published: true`로 공개합니다. 초안은 `false`로 두며 공개 목록·상세에서 제외됩니다. 글을 추가한 뒤 빌드·배포하면 홈페이지의 최신 소식과 사이트맵에도 반영됩니다.
+
+현재 글 한 건은 실제 홈페이지 개발 시작을 알리는 초기 콘텐츠입니다. 게임명·출시일·외부 커뮤니티 주소는 확정 정보가 없어 임의로 작성하지 않았습니다. 관리자 CMS는 추가하지 않았습니다.
+
+## 문의 운영
+
+백엔드 작업 폴더에서 `npm run inquiries:list`로 최근 50건을 확인합니다. 담당자가 남겨진 이메일로 직접 답변하는 방식이며 자동 이메일 발송은 연결하지 않았습니다. 개인정보가 담긴 명령 출력과 DB를 공개하거나 Git에 추가하지 마세요.
+
+데이터 저장 경로, 보관기간 정리, API 계약과 배포 전제는 [백엔드 README](../../back/dev/README.md)에 설명되어 있습니다. 이 링크는 위의 로컬 폴더 구조에서 사용할 수 있습니다.
+
+## 검증과 배포
+
+```bash
+npm run lint
+npm test
+npm run build
+# back/dev에서
+npm test
+```
+
+화면 변경 후 데스크톱·모바일에서 주요 동작을 확인합니다. 운영 구성은 **Vercel 프런트 + 이 Mac의 백엔드·SQLite + 기존 ngrok**입니다. Vercel 프로젝트 설정, 환경변수, Mac 연결 경로와 검증 순서는 [배포 문서](docs/deployment.md)를 따릅니다.
